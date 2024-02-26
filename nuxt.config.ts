@@ -2,7 +2,8 @@
 export default defineNuxtConfig({
     devtools: {enabled: true},
     modules: [
-        '@nuxtjs/color-mode'
+        '@nuxtjs/color-mode',
+        '@nuxt/image',
     ],
     colorMode: {
         classSuffix: ''
