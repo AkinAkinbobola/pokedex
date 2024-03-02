@@ -1,8 +1,9 @@
 export default defineEventHandler(async (event) => {
+    const {offset = 0, limit = 30 } = getQuery(event)
     const data = await $fetch("https://pokeapi.co/api/v2/pokemon/", {
         query: {
-            limit: 30,
-            offset: 0
+            limit: limit,
+            offset: offset
         }
     });
     const count = data.count;
