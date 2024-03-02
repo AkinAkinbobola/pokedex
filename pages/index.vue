@@ -1,9 +1,9 @@
-<script setup lang="ts">
-
+<script setup>
+const {data: pokemons} = await useFetch(`/api/pokemon/all`)
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
+  <div>
+    <PokemonCards :pokemons="pokemons.pokemonData" :count="pokemons.count"/>
+  </div>
 </template>
