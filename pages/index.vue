@@ -1,23 +1,32 @@
 <script setup>
-
 const offset = ref(0)
 const limit = ref(50)
 
-const {data: pokemons, loading} = await useFetch(`/api/pokemon/all`, {
+const {data: pokemons, pending, error} = await useFetch(() => `/api/pokemon/all`, {
   query: {
     offset: offset.value,
     limit: limit.value
   }
 })
+const handleNext = () => {
+  offset.value += 30
+}
 </script>
 
 <template>
   <div>
-    <div v-if="loading">
-      <PokemonSkeletons/>
+    <div v-if="error" class="text-red-400 text-center font-bold text-2xl">
+      Oops an error occurred. Please try again later
     </div>
     <div v-else>
-      <PokemonCards :pokemons="pokemons.pokemonData" :count="pokemons.count"/>
+      <div v-if="pending">
+        <PokemonSkeletons/>
+      </div>
+      <div v-else>
+        <PokemonCards :pokemons="pokemons.pokemonData" :count="pokemons.count"/>
+        <button @click="handleNext">Next</button>
+      </div>
     </div>
+
   </div>
 </template>
