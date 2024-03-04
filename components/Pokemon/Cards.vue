@@ -117,10 +117,13 @@ const pokemonLightColor = computed(() => {
           <div class="flex">
             <div v-for="(type, index) in pokemon.types" :key="type.slot">
               <div
-                  class="mr-5 text-black px-3 py-2 rounded-2xl"
+                  class="mr-5 text-black px-3 py-2 rounded-2xl flex gap-2"
                   :class="pokemonLightColor(type.type.name)"
               >
-                {{ type.type.name }}
+                <img :src="`/icons/${type.type.name}.svg`" alt=""/>
+                <span>
+                  {{ type.type.name }}
+                </span>
               </div>
             </div>
           </div>
