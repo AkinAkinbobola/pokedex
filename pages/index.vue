@@ -1,9 +1,15 @@
 <script setup>
 const offset = ref(0)
-const limit = ref(60)
+const limit = ref(30)
 const loading = ref(true)
 const handleNext = () => {
+  if(offset.value + limit.value >= pokemons.value.count) return
   offset.value += limit.value
+  refresh()
+}
+const handlePrev = () => {
+  if(offset.value === 0) return
+  offset.value -= limit.value
   refresh()
 }
 const {data: pokemons, pending, error, refresh} = await useAsyncData(
@@ -28,10 +34,8 @@ onMounted(() => {
         <div v-if="pending">
           <PokemonSkeletons/>
         </div>
-        <div v-else>
-          <PokemonCards :pokemons="pokemons.pokemonData" :count="pokemons.count"/>
-          {{offset}}
-          <button @click="handleNext">next</button>
+        <div v-else class="relative">
+          <PokemonCards :pokemons="pokemons.pokemonData" :count="pokemons.count" @prev="handlePrev" @next="handleNext"/>
         </div>
       </div>
     </div>

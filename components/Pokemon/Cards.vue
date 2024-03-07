@@ -90,10 +90,20 @@ const pokemonLightColor = computed(() => {
     }
   };
 });
+const emits = defineEmits(["next", "prev"]);
 </script>
 
 <template>
-  <div>
+  <div class="relative">
+    <div>
+      <button @click="emits('prev')" class="fixed left-2 top-1/2">
+        <Icon name="material-symbols:arrow-back-rounded" class="text-4xl"/>
+      </button>
+      <button @click="emits('next')" class="fixed right-2 top-1/2">
+        <Icon name="material-symbols:arrow-forward-rounded" class="text-4xl"/>
+      </button>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 font-poppins px-10 py-8">
       <div
           v-for="(pokemon, index) in pokemons"
