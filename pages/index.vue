@@ -1,17 +1,15 @@
 <script setup>
 const offset = ref(0)
-const limit = ref(50)
+const limit = ref(60)
 const loading = ref(true)
-
-const {data: pokemons, pending, error} = await useFetch(() => `/api/pokemon/all`, {
-  query: {
-    offset: offset.value,
-    limit: limit.value
-  }
-})
 const handleNext = () => {
-  offset.value += 30
+  offset.value += limit.value
+  refresh()
 }
+const {data: pokemons, pending, error, refresh} = await useAsyncData(
+    'pokemonData',
+    () => $fetch(`/api/pokemon/all?offset=${offset.value}&limit=${limit.value}`)
+)
 onMounted(() => {
   setTimeout(() => loading.value = false, 200)
 })
@@ -32,9 +30,10 @@ onMounted(() => {
         </div>
         <div v-else>
           <PokemonCards :pokemons="pokemons.pokemonData" :count="pokemons.count"/>
+          {{offset}}
+          <button @click="handleNext">next</button>
         </div>
       </div>
     </div>
   </div>
-
 </template>
