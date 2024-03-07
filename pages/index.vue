@@ -1,21 +1,32 @@
 <script setup>
+import { ref, onMounted } from 'vue'
+
 const offset = ref(0)
 const limit = ref(30)
 const loading = ref(true)
+
 const handleNext = () => {
-  if(offset.value + limit.value >= pokemons.value.count) return
+  if (offset.value + limit.value >= pokemons.value.count) return
   offset.value += limit.value
   refresh()
 }
+
 const handlePrev = () => {
-  if(offset.value === 0) return
+  if (offset.value === 0) return
   offset.value -= limit.value
   refresh()
 }
-const {data: pokemons, pending, error, refresh} = await useAsyncData(
+
+const handleSearch = (searchValue) => {
+  if (searchValue === '') return
+  console.log(searchValue)
+}
+
+const { data: pokemons, pending, error, refresh } = useAsyncData(
     'pokemonData',
     () => $fetch(`/api/pokemon/all?offset=${offset.value}&limit=${limit.value}`)
 )
+
 onMounted(() => {
   setTimeout(() => loading.value = false, 200)
 })
@@ -35,6 +46,7 @@ onMounted(() => {
           <PokemonSkeletons/>
         </div>
         <div v-else class="relative">
+          <PokemonSearch @search="handleSearch"/>
           <PokemonCards :pokemons="pokemons.pokemonData" :count="pokemons.count" @prev="handlePrev" @next="handleNext"/>
         </div>
       </div>
