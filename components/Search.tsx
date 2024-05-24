@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Search = () => {
     return (
-        <section className={"w-full bg-white rounded-2xl mt-10"}>
+        <section className={"w-full bg-white rounded-2xl mt-10 mb-10"}>
             <form className={"flex items-center justify-between py-2 pr-2 pl-4"}>
                 <div className={"flex items-center gap-4"}>
                     <Image src={"/icons/search.svg"} alt={"Search Icon"} width={24} height={24}
