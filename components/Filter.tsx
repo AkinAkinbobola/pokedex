@@ -1,11 +1,11 @@
 "use client"
 
-import { FC, useState } from "react";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {FC, useState} from "react";
+import {Sheet, SheetContent, SheetTitle, SheetTrigger} from "@/components/ui/sheet";
 import Image from "next/image";
-import { Separator } from "@/components/ui/separator";
-import { heights, pokemonTypes, weights } from "@/constants";
-import { capitalizeFirstLetter } from "@/lib/utils";
+import {Separator} from "@/components/ui/separator";
+import {heights, pokemonTypes, weights} from "@/constants";
+import {capitalizeFirstLetter} from "@/lib/utils";
 
 interface Checkboxes {
     [key: string]: boolean;
@@ -29,7 +29,7 @@ const Filter: FC = () => {
                 <Image src="/icons/filter.svg" alt="sort-icon" width={16} height={16} />
                 <p className="font-bold">Filters</p>
             </SheetTrigger>
-            <SheetContent className="bg-lightGray flex flex-col min-h-screen gap-5">
+            <SheetContent className="bg-lightGray flex flex-col gap-4 max-h-screen overflow-y-auto">
                 <SheetTitle className="font-bold text-[20px]">Filters</SheetTitle>
                 <Separator className="bg-darkGray/25" />
 
@@ -51,7 +51,8 @@ const Filter: FC = () => {
 
                 <h1 className="text-darkGray/60 font-medium">Height</h1>
                 <div className="flex gap-4">
-                    {heights.map((height: string) => (
+                    {
+                        heights.map((height) => (
                         <div
                             key={height}
                             className={`${
@@ -61,12 +62,14 @@ const Filter: FC = () => {
                         >
                             <Image src={`/icons/${height}`} alt={height} width={28} height={28} />
                         </div>
-                    ))}
+                        ))
+                    }
                 </div>
 
                 <h1 className="text-darkGray/60 font-medium">Weight</h1>
                 <div className="flex gap-4">
-                    {weights.map((weight: string) => (
+                    {
+                        weights.map((weight) => (
                         <div
                             key={weight}
                             className={`${
@@ -76,7 +79,8 @@ const Filter: FC = () => {
                         >
                             <Image src={`/icons/${weight}`} alt={weight} width={28} height={28} />
                         </div>
-                    ))}
+                        ))
+                    }
                 </div>
 
                 <div className="flex gap-4 mt-auto">
