@@ -21,7 +21,7 @@ export default function RootLayout({
     return (
         <html lang="en">
         <body className={roboto.className}>
-        <div className={"max-w-7xl mx-auto pt-12"}>
+        <div className={"max-w-7xl mx-auto py-12"}>
             <Header/>
             {children}
         </div>
