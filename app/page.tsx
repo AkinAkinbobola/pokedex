@@ -1,6 +1,7 @@
 import {fetchPokemon} from "@/app/actions/getPokemon";
 import Search from "@/components/Search";
 import Sort from "@/components/Sort";
+import Filter from "@/components/Filter";
 
 type HomeProps = {
     searchParams: {
@@ -17,14 +18,9 @@ const Home = async ({searchParams}: HomeProps) => {
 
             <div className={"flex items-center justify-between mb-10"}>
                 <Sort/>
+
+                <Filter/>
             </div>
-            <ul>
-                {
-                    pokemon.map((p: { name: string, url: string }) => (
-                        <li>{p.name} - {p.url}</li>
-                    ))
-                }
-            </ul>
         </main>
     );
 };
