@@ -33,7 +33,7 @@ const LoadPokemon = ({search, initialPokemon}: LoadPokemonProps) => {
             if (!prevState) {
                 return newPokemon
             }
-            const uniquePokemon = newPokemon.filter(
+            const uniquePokemon = newPokemon!.filter(
                 (poke: Pokemon) =>
                     !prevState.some((p) => p.name === poke.name)
             )
