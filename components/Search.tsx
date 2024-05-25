@@ -3,7 +3,7 @@ import Image from "next/image";
 const Search = () => {
     return (
         <section className="w-full bg-white rounded-2xl mt-10 mb-10">
-            <form className="flex items-center justify-between py-2 pr-2 pl-4 max-w-screen-lg mx-auto">
+            <form className="flex items-center justify-between py-2 pr-2 pl-4">
                 <div className="flex items-center gap-4 flex-grow">
                     <Image
                         src="/icons/search.svg"
@@ -14,7 +14,7 @@ const Search = () => {
                     />
                     <input
                         type="text"
-                        placeholder="Pokemon name, number or type"
+                        placeholder={"Search..."}
                         className="outline-none text-darkBlue placeholder-darkBlue placeholder:font-medium w-full md:w-[230px]"
                     />
                 </div>
