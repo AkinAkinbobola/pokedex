@@ -23,7 +23,9 @@ const Home = async ({searchParams}: HomeProps) => {
                 <Filter/>
             </div>
 
-            <LoadPokemon search={search} initialPokemon={pokemon}/>
+            <div key={Math.random()}>
+                <LoadPokemon search={search} initialPokemon={pokemon}/>
+            </div>
         </main>
     );
 };

@@ -19,7 +19,8 @@ const pokemonTypes = [
     {name: "fairy", color: "#FFA2E3"},
     {name: "electric", color: "#FFFA86"},
     {name: "steel", color: "#A4FFE9"},
-    {name: "grass", color: "#80E177"}
+    {name: "grass", color: "#80E177"},
+    {name: "flying", color: "linear-gradient(to right, #CBE9FF, #2299EE)"}
 ];
 
 const backgroundPokemonTypes = [
@@ -39,7 +40,8 @@ const backgroundPokemonTypes = [
     {name: "fairy", color: "#C01A8D"},
     {name: "electric", color: "#B7B117"},
     {name: "steel", color: "#448F85"},
-    {name: "grass", color: "#1EBA11"}
+    {name: "grass", color: "#1EBA11"},
+    {name: "flying", color: "linear-gradient(to right, #CBE9FF, #2299EE)"}
 ]
 const getColorForType = (type: string): string | undefined => {
     const colorObject = pokemonTypes.find(color => color.name === type);
@@ -61,7 +63,7 @@ const PokemonCard = ({pokemon, key, index}: { pokemon: Pokemon, key: string, ind
         visible: {opacity: 1}
     }
     return (
-        <motion.div style={{backgroundColor: color}} className={"rounded-2xl p-6 relative mb-20"}
+        <motion.div style={{backgroundColor: color, backgroundImage: color}} className={"rounded-2xl px-6 pb-6 relative mb-20"}
                     variants={variants}
                     initial="hidden"
                     animate="visible"
@@ -75,7 +77,6 @@ const PokemonCard = ({pokemon, key, index}: { pokemon: Pokemon, key: string, ind
             <Image src={pokemon.sprites.other["official-artwork"].front_default} alt={"Image"} width={180}
                    height={134} className={"absolute top-24 -translate-y-full left-1/2 -translate-x-1/2"}/>
             <div>
-
                 <p className={"text-white font-bold text-[28px] mb-2 pt-28"}>{capitalizeFirstLetter(pokemon.name)}</p>
                 <p className={"text-white/80 font-bold text-[18px] mb-5"}>{formatPokemonId(pokemon.id)}</p>
 
@@ -85,7 +86,7 @@ const PokemonCard = ({pokemon, key, index}: { pokemon: Pokemon, key: string, ind
                                 const typeColor = getColorForType(t.type.name)
                                 return (
                                     <div className={"flex items-center justify-between py-2 px-3 rounded-full gap-1.5"}
-                                         style={{backgroundColor: typeColor}}>
+                                         style={{backgroundColor: typeColor, backgroundImage: typeColor}}>
                                         <Image src={`/icons/${t.type.name}.svg`} alt={`${t.type.name} Icon`} width={16}
                                                height={16}/>
                                         <p className={"font-medium"}>
