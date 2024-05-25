@@ -51,9 +51,9 @@ const LoadPokemon = ({search, initialPokemon}: LoadPokemonProps) => {
         <>
             <div className={"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"}>
                 {
-                    pokemon?.map((poke: Pokemon) => {
+                    pokemon?.map((poke: Pokemon, index  ) => {
                         return (
-                            <PokemonCard key={poke.name} pokemon={poke} />
+                            <PokemonCard key={poke.name} pokemon={poke} index={index}/>
                         )
                     })
                 }
@@ -61,7 +61,7 @@ const LoadPokemon = ({search, initialPokemon}: LoadPokemonProps) => {
 
             {
                 pokemon && pokemon.length >= 24 && (
-                    <div ref={ref}>
+                    <div ref={ref} className={"flex items-center justify-center"}>
                         <ClipLoader/>
                     </div>
                 )

@@ -1,4 +1,5 @@
 import {capitalizeFirstLetter} from "@/lib/utils";
+import {motion} from "framer-motion";
 import Image from "next/image";
 
 const pokemonTypes = [
@@ -50,13 +51,27 @@ const formatPokemonId = (id: number) => {
     else return `#${id}`;
 };
 
-const PokemonCard = ({pokemon, key}: { pokemon: Pokemon, key: string }) => {
+const PokemonCard = ({pokemon, key, index}: { pokemon: Pokemon, key: string, index: number }) => {
     const [{color}] = backgroundPokemonTypes.filter(
         (type) => pokemon.types[0].type.name.indexOf(type.name) !== -1
     );
 
+    const variants = {
+        hidden: {opacity: 0},
+        visible: {opacity: 1}
+    }
     return (
-        <div style={{backgroundColor: color}} className={"rounded-2xl p-6 relative mb-20"}>
+        <motion.div style={{backgroundColor: color}} className={"rounded-2xl p-6 relative mb-20"}
+                    variants={variants}
+                    initial="hidden"
+                    animate="visible"
+                    transition={{
+                        delay: index * 0.25,
+                        ease: "easeInOut",
+                        duration: 0.5
+                    }}
+                    viewport={{amount: 0}}
+        >
             <Image src={pokemon.sprites.other["official-artwork"].front_default} alt={"Image"} width={180}
                    height={134} className={"absolute top-24 -translate-y-full left-1/2 -translate-x-1/2"}/>
             <div>
@@ -84,8 +99,9 @@ const PokemonCard = ({pokemon, key}: { pokemon: Pokemon, key: string }) => {
                 </div>
             </div>
 
-            <Image src={"/ellipse.svg"} alt={"ellipse"} width={100} height={100} className={"absolute bottom-0 left-0"}/>
-        </div>
+            <Image src={"/ellipse.svg"} alt={"ellipse"} width={100} height={100}
+                   className={"absolute bottom-0 left-0"}/>
+        </motion.div>
     );
 };
 
