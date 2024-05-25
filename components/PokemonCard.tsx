@@ -1,6 +1,14 @@
 import {capitalizeFirstLetter} from "@/lib/utils";
 import {motion} from "framer-motion";
 import Image from "next/image";
+import {
+    Dialog,
+    DialogContent,
+} from "@/components/ui/dialog"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+
+import {useState} from "react";
+
 
 const pokemonTypes = [
     {name: "fire", color: "#FF6464"},
@@ -62,47 +70,66 @@ const PokemonCard = ({pokemon, key, index}: { pokemon: Pokemon, key: string, ind
         hidden: {opacity: 0},
         visible: {opacity: 1}
     }
+
+    const [showModal, setShowModal] = useState(false)
     return (
-        <motion.div style={{backgroundColor: color, backgroundImage: color}} className={"rounded-2xl px-6 pb-6 relative mb-20"}
-                    variants={variants}
-                    initial="hidden"
-                    animate="visible"
-                    transition={{
-                        delay: index * 0.25,
-                        ease: "easeInOut",
-                        duration: 0.5
-                    }}
-                    viewport={{amount: 0}}
-        >
-            <Image src={pokemon.sprites.other["official-artwork"].front_default} alt={"Image"} width={180}
-                   height={134} className={"absolute top-24 -translate-y-full left-1/2 -translate-x-1/2"}/>
-            <div>
-                <p className={"text-white font-bold text-[28px] mb-2 pt-28"}>{capitalizeFirstLetter(pokemon.name)}</p>
-                <p className={"text-white/80 font-bold text-[18px] mb-5"}>{formatPokemonId(pokemon.id)}</p>
+        <>
+            <motion.div style={{backgroundColor: color, backgroundImage: color}} onClick={() => setShowModal(true)}
+                        className={"rounded-2xl px-6 pb-6 relative mb-20 cursor-pointer"}
+                        variants={variants}
+                        initial="hidden"
+                        animate="visible"
+                        transition={{
+                            delay: index * 0.25,
+                            ease: "easeInOut",
+                            duration: 0.5
+                        }}
+                        viewport={{amount: 0}}
+            >
+                <Image src={pokemon.sprites.other["official-artwork"].front_default} alt={"Image"} width={180}
+                       height={134} className={"absolute top-24 -translate-y-full left-1/2 -translate-x-1/2"}/>
+                <div>
+                    <p className={"text-white font-bold text-[28px] mb-2 pt-28"}>{capitalizeFirstLetter(pokemon.name)}</p>
+                    <p className={"text-white/80 font-bold text-[18px] mb-5"}>{formatPokemonId(pokemon.id)}</p>
 
-                <div className={"flex items-center gap-2"}>
-                    {
-                        pokemon.types.map(t => {
-                                const typeColor = getColorForType(t.type.name)
-                                return (
-                                    <div className={"flex items-center justify-between py-2 px-3 rounded-full gap-1.5"}
-                                         style={{backgroundColor: typeColor, backgroundImage: typeColor}}>
-                                        <Image src={`/icons/${t.type.name}.svg`} alt={`${t.type.name} Icon`} width={16}
-                                               height={16}/>
-                                        <p className={"font-medium"}>
-                                            {capitalizeFirstLetter(t.type.name)}
-                                        </p>
-                                    </div>
-                                )
-                            }
-                        )
-                    }
+                    <div className={"flex items-center gap-2"}>
+                        {
+                            pokemon.types.map(t => {
+                                    const typeColor = getColorForType(t.type.name)
+                                    return (
+                                        <div className={"flex items-center justify-between py-2 px-3 rounded-full gap-1.5"}
+                                             style={{backgroundColor: typeColor, backgroundImage: typeColor}}>
+                                            <Image src={`/icons/${t.type.name}.svg`} alt={`${t.type.name} Icon`} width={16}
+                                                   height={16}/>
+                                            <p className={"font-medium"}>
+                                                {capitalizeFirstLetter(t.type.name)}
+                                            </p>
+                                        </div>
+                                    )
+                                }
+                            )
+                        }
+                    </div>
                 </div>
-            </div>
 
-            <Image src={"/ellipse.svg"} alt={"ellipse"} width={100} height={100}
-                   className={"absolute bottom-0 left-0"}/>
-        </motion.div>
+                <Image src={"/ellipse.svg"} alt={"ellipse"} width={100} height={100}
+                       className={"absolute bottom-0 left-0"}/>
+            </motion.div>
+
+            <Dialog open={showModal} onOpenChange={() => setShowModal(false)}>
+                <DialogContent>
+                    <Tabs defaultValue="account">
+                        <TabsList  className={"w-full border-b bg-white"}>
+                            <TabsTrigger value="account">Account</TabsTrigger>
+                            <TabsTrigger value="password">Password</TabsTrigger>
+                        </TabsList>
+                        <TabsContent value="account">Make changes to your account here.</TabsContent>
+                        <TabsContent value="password">Change your password here.</TabsContent>
+                    </Tabs>
+
+                </DialogContent>
+            </Dialog>
+        </>
     );
 };
 
