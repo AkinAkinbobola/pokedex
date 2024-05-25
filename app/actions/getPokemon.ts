@@ -31,7 +31,13 @@ const pokemonNameStartsWithQuery = (name: string, query: string) => {
 
 export const fetchPokemon = async ({page = 1, search}: { page?: number, search?: string | undefined }) => {
     try {
-        return await getPokemon({query: search, page})
+        const plainResponse = await getPokemon({query: search, page})
+
+        const detailedPokemonPromises = plainResponse.map(async (pokemon: { url: string }) => {
+            const pokemonResponse = await fetch(pokemon.url);
+            return pokemonResponse.json();
+        });
+        return await Promise.all(detailedPokemonPromises)
     } catch (error) {
         console.log(error)
     }

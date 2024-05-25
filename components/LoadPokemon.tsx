@@ -4,16 +4,13 @@ import {useEffect, useState} from "react";
 import {useInView} from "react-intersection-observer";
 import {fetchPokemon} from "@/app/actions/getPokemon";
 import {ClipLoader} from "react-spinners";
+import PokemonCard from "@/components/PokemonCard";
 
 type LoadPokemonProps = {
     search: string | undefined,
     initialPokemon: Pokemon[] | undefined,
 }
 
-type Pokemon = {
-    name: string,
-    url: string
-}
 
 const LoadPokemon = ({search, initialPokemon}: LoadPokemonProps) => {
     const [pokemon, setPokemon] = useState(initialPokemon)
@@ -52,11 +49,11 @@ const LoadPokemon = ({search, initialPokemon}: LoadPokemonProps) => {
     }, [inView]);
     return (
         <>
-            <div className={"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"}>
+            <div className={"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"}>
                 {
                     pokemon?.map((poke: Pokemon) => {
                         return (
-                            <li key={poke.name}>{poke.name}</li>
+                            <PokemonCard key={poke.name} pokemon={poke} />
                         )
                     })
                 }
