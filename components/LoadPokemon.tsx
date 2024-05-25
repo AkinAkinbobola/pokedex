@@ -19,12 +19,8 @@ const LoadPokemon = ({search, initialPokemon}: LoadPokemonProps) => {
 
     const {inView, ref} = useInView()
 
-    const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-
     const loadMorePokemon = async () => {
         setLoading(true)
-        await delay(1000)
 
         const nextPage = page + 1
         const newPokemon = await fetchPokemon({page: nextPage, search})
