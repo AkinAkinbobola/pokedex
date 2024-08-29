@@ -13,7 +13,7 @@ interface PokemonsProps {
 
 const Pokemons = ({ query }: PokemonsProps) => {
   const { isLoading, data, error } = useQuery({
-    queryKey: ["pokemons"],
+    queryKey: ["pokemons", query],
     queryFn: () =>
       ky
         .get("/api/pokemons", {
@@ -30,25 +30,27 @@ const Pokemons = ({ query }: PokemonsProps) => {
 
   if (error) {
     return (
-      <div className={"text-destructive text-center"}>Something went wrong</div>
+      <div className={"text-destructive text-center mt-[102px]"}>
+        Something went wrong : {error.message}
+      </div>
+    );
+  }
+
+  if (!data || data.length === 0) {
+    return (
+      <div className={"font-bold text-center mt-[102px]"}>No pokemon found</div>
     );
   }
 
   return (
-    <div>
-      {!data ? (
-        <div>No pokemon found</div>
-      ) : (
-        <div
-          className={
-            "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-[82px] mt-[102px]"
-          }
-        >
-          {data.map((pokemon) => (
-            <Pokemon pokemon={pokemon} key={pokemon.id} />
-          ))}
-        </div>
-      )}
+    <div
+      className={
+        "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-[82px] mt-[102px]"
+      }
+    >
+      {data.map((pokemon) => (
+        <Pokemon pokemon={pokemon} key={pokemon.id} />
+      ))}
     </div>
   );
 };
