@@ -30,9 +30,13 @@ const Pokemon = ({ pokemon }: PokemonProps) => {
         }
       />
 
-      <div className={"p-6"}>
-        <h1 className={"font-bold"}>{capitalizeFirstLetter(pokemon.name)}</h1>
-        <h2>{formatPokemonId(pokemon.id)}</h2>
+      <div className={"p-6 absolute bottom-0"}>
+        <h1 className={"font-bold text-white text-[28px] mb-2"}>
+          {capitalizeFirstLetter(pokemon.name)}
+        </h1>
+        <h2 className={"text-white/80 font-bold text-[18px] mb-[20px]"}>
+          {formatPokemonId(pokemon.id)}
+        </h2>
 
         <div className={"flex items-center gap-2"}>
           {pokemon.types.map((item) => (
@@ -55,15 +59,18 @@ const PokemonTag = ({ type }: PokemonTagProps) => {
   return (
     <Button
       style={{ backgroundColor }}
-      className={"rounded-3xl flex items-center gap"}
+      className={"rounded-3xl flex items-center gap-1.5"}
     >
       <Image
         src={`/icons/${type.type.name}.svg`}
         alt={`${type.type.name} Icon`}
         width={16}
         height={16}
+        className={"flex-none"}
       />
-      <span>{capitalizeFirstLetter(type.type.name)}</span>
+      <span className={"text-darkGray text-[16px] font-medium"}>
+        {capitalizeFirstLetter(type.type.name)}
+      </span>
     </Button>
   );
 };
