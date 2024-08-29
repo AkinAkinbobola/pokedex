@@ -13,6 +13,9 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: "Pokedex",
   description: "Pokedex with Next JS 14",
+  icons: {
+    icon: "/favicon.ico"
+  }
 };
 
 export default function RootLayout({
