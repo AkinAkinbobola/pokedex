@@ -1,11 +1,14 @@
 import SearchBar from "@/components/SearchBar";
+import Pokemons from "@/components/Pokemons";
 
-const Home = async () => {
-    return (
-        <main>
-            <SearchBar/>
-        </main>
-    );
+const Home = () => {
+  return (
+    <main>
+      <SearchBar />
+
+      <Pokemons />
+    </main>
+  );
 };
 
 export default Home;
