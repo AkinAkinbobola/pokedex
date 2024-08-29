@@ -1,15 +1,25 @@
 import React from "react";
-import { PokemonData } from "@/lib/types";
+import { PokemonData, Type } from "@/lib/types";
 import Image from "next/image";
-import { capitalizeFirstLetter, formatPokemonId } from "@/lib/utils";
+import {
+  capitalizeFirstLetter,
+  formatPokemonId,
+  getBackgroundPokemonColour,
+  getBackgroundTagColour,
+} from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface PokemonProps {
   pokemon: PokemonData;
 }
 
 const Pokemon = ({ pokemon }: PokemonProps) => {
+  const backgroundColor = getBackgroundPokemonColour(pokemon);
   return (
-    <div className={"rounded-xl bg-card relative h-[260px]"}>
+    <div
+      className={"rounded-xl relative h-[260px]"}
+      style={{ backgroundColor }}
+    >
       <Image
         src={pokemon.sprites.other?.["official-artwork"].front_default || ""}
         alt={`${pokemon.name} Sprite`}
@@ -26,7 +36,7 @@ const Pokemon = ({ pokemon }: PokemonProps) => {
 
         <div className={"flex items-center gap-2"}>
           {pokemon.types.map((item) => (
-            <div>{capitalizeFirstLetter(item.type.name)}</div>
+            <PokemonTag type={item} key={item.type.name} />
           ))}
         </div>
       </div>
@@ -35,3 +45,25 @@ const Pokemon = ({ pokemon }: PokemonProps) => {
 };
 
 export default Pokemon;
+
+interface PokemonTagProps {
+  type: Type;
+}
+
+const PokemonTag = ({ type }: PokemonTagProps) => {
+  const backgroundColor = getBackgroundTagColour(type);
+  return (
+    <Button
+      style={{ backgroundColor }}
+      className={"rounded-3xl flex items-center gap"}
+    >
+      <Image
+        src={`/icons/${type.type.name}.svg`}
+        alt={`${type.type.name} Icon`}
+        width={16}
+        height={16}
+      />
+      <span>{capitalizeFirstLetter(type.type.name)}</span>
+    </Button>
+  );
+};
