@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import ReactQueryProvider from "@/components/ReactQueryProvider";
+import { cn } from "@/lib/utils";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -21,7 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.className} bg-lightGray`}>
+      <body
+        className={cn(
+          "bg-lightGray min-h-screen antialiased font-sans",
+          roboto.className,
+        )}
+      >
         <ReactQueryProvider>
           <div className={"container py-12"}>
             <Header />

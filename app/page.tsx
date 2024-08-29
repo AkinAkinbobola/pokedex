@@ -1,12 +1,18 @@
 import SearchBar from "@/components/SearchBar";
 import Pokemons from "@/components/Pokemons";
 
-const Home = () => {
+interface Props {
+  searchParams: {
+    q: string;
+  };
+}
+
+const Home = ({ searchParams: { q } }: Props) => {
   return (
     <main>
       <SearchBar />
 
-      <Pokemons />
+      <Pokemons query={q} />
     </main>
   );
 };
