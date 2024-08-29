@@ -19,7 +19,11 @@ const Pokemons = () => {
       ) : (
         <div>
           {data && (
-            <div>
+            <div
+              className={
+                "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-[82px] mt-[102px]"
+              }
+            >
               {data.map((pokemon) => (
                 <Pokemon pokemon={pokemon} key={pokemon.id} />
               ))}
