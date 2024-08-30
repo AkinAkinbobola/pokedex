@@ -30,7 +30,7 @@ const Pokemons = ({ query }: PokemonsProps) => {
     });
 
   const { ref } = useInView({
-    // rootMargin: "200px",
+    rootMargin: "200px",
     onChange(inView) {
       if (inView && hasNextPage && !isFetching) {
         fetchNextPage();
