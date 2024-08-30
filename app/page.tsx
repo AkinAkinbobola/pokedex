@@ -3,7 +3,7 @@ import Pokemons from "@/components/Pokemons";
 
 interface Props {
   searchParams: {
-    q: string;
+    q: string | undefined;
   };
 }
 

@@ -7,27 +7,40 @@ import { PokemonsPage } from "@/lib/types";
 import Pokemon from "@/components/Pokemon";
 import PokemonsLoadingSkeleton from "@/components/PokemonsLoadingSkeleton";
 import { useInView } from "react-intersection-observer";
+import { Loader2 } from "lucide-react";
 
 interface PokemonsProps {
-  query: string;
+  query?: string;
 }
 
 const Pokemons = ({ query }: PokemonsProps) => {
-  const { isLoading, data, error, fetchNextPage, hasNextPage, isFetching } =
-    useInfiniteQuery({
-      queryKey: ["pokemons", query],
-      queryFn: ({ pageParam }) =>
-        ky
-          .get("/api/pokemons", {
-            searchParams: {
-              q: query,
-              offset: pageParam,
-            },
-          })
-          .json<PokemonsPage>(),
-      initialPageParam: 0,
-      getNextPageParam: (lastPage) => lastPage.nextOffset,
-    });
+  const {
+    isLoading,
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["pokemons", query],
+    queryFn: ({ pageParam }) =>
+      ky
+        .get(
+          "/api/pokemons",
+          query
+            ? {
+                searchParams: {
+                  q: query,
+                  offset: pageParam,
+                },
+              }
+            : { searchParams: { offset: pageParam } },
+        )
+        .json<PokemonsPage>(),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => lastPage.nextOffset,
+  });
 
   const { ref } = useInView({
     rootMargin: "200px",
@@ -58,16 +71,22 @@ const Pokemons = ({ query }: PokemonsProps) => {
   }
 
   return (
-    <div
-      className={
-        "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-[112px] mt-[102px]"
-      }
-    >
-      {pokemons.map((pokemon) => (
-        <Pokemon pokemon={pokemon} key={pokemon.id} />
-      ))}
-      <div ref={ref} />
-    </div>
+    <>
+      <div
+        className={
+          "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-[112px] mt-[102px]"
+        }
+      >
+        {pokemons.map((pokemon) => (
+          <Pokemon pokemon={pokemon} key={pokemon.id} />
+        ))}
+        <div ref={ref} />
+      </div>
+
+      {isFetchingNextPage && (
+        <Loader2 className={"animate-spin mx-auto py-4"} />
+      )}
+    </>
   );
 };
 
