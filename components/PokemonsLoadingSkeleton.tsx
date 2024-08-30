@@ -9,7 +9,7 @@ const PokemonsLoadingSkeleton = () => {
       }
     >
       {new Array(10).fill(null).map((_, index) => (
-        <PokemonLoadingSkeleton />
+        <PokemonLoadingSkeleton key={index}/>
       ))}
     </div>
   );
