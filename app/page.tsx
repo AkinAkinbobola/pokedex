@@ -7,7 +7,7 @@ interface Props {
   };
 }
 
-const Home = ({ searchParams: { q } }: Props) => {
+const Home = async ({ searchParams: { q } }: Props) => {
   return (
     <main>
       <SearchBar />
