@@ -1,5 +1,5 @@
 import {Type} from "@/lib/types";
-import {capitalizeFirstLetter, getBackgroundTagColour} from "@/lib/utils";
+import {formatWord, getBackgroundTagColour} from "@/lib/utils";
 import {Button} from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
@@ -23,7 +23,7 @@ const PokemonTag = ({ type }: PokemonTagProps) => {
                 className={"flex-none"}
             />
             <span className={"text-darkGray text-[16px] font-medium"}>
-        {capitalizeFirstLetter(type.type.name)}
+        {formatWord(type.type.name)}
       </span>
         </Button>
     );

@@ -3,7 +3,7 @@ import { PokemonData } from "@/lib/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft } from "lucide-react";
 import {
-  capitalizeFirstLetter,
+  formatWord,
   formatPokemonId,
   getBackgroundPokemonColour,
 } from "@/lib/utils";
@@ -57,7 +57,7 @@ const ShowPokemonDetailsDialog = ({
                 "font-bold text-white text-[48px] mb-[18px] cursor-pointer"
               }
             >
-              {capitalizeFirstLetter(pokemon.name)}
+              {formatWord(pokemon.name)}
             </h1>
 
             <div className={"flex items-center gap-2"}>

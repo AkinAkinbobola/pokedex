@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { PokemonData, Type } from "@/lib/types";
 import Image from "next/image";
 import {
-  capitalizeFirstLetter,
+  formatWord,
   formatPokemonId,
   getBackgroundPokemonColour,
   getBackgroundTagColour,
@@ -41,7 +41,7 @@ const Pokemon = ({ pokemon }: PokemonProps) => {
           className={"font-bold text-white text-[28px] mb-2 cursor-pointer"}
           onClick={() => setIsDialogOpen(true)}
         >
-          {capitalizeFirstLetter(pokemon.name)}
+          {formatWord(pokemon.name)}
         </h1>
         <h2 className={"text-white/80 font-bold text-[18px] mb-[20px]"}>
           {formatPokemonId(pokemon.id)}

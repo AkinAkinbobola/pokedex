@@ -5,7 +5,7 @@ import {Sheet, SheetContent, SheetTitle, SheetTrigger} from "@/components/ui/she
 import Image from "next/image";
 import {Separator} from "@/components/ui/separator";
 import {heights, pokemonTypes, weights} from "@/constants";
-import {capitalizeFirstLetter} from "@/lib/utils";
+import {formatWord} from "@/lib/utils";
 
 interface Checkboxes {
     [key: string]: boolean;
@@ -44,7 +44,7 @@ const Filter: FC = () => {
                                 height={20}
                                 onClick={() => handleCheckboxChange(type)}
                             />
-                            <p className="font-medium">{capitalizeFirstLetter(type)}</p>
+                            <p className="font-medium">{formatWord(type)}</p>
                         </div>
                     ))}
                 </div>

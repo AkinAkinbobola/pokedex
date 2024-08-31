@@ -1,5 +1,5 @@
 import { PokemonData } from "@/lib/types";
-import { capitalizeFirstLetter } from "@/lib/utils";
+import { formatWord } from "@/lib/utils";
 
 interface PokemonAboutProps {
   pokemon: PokemonData;
@@ -7,7 +7,7 @@ interface PokemonAboutProps {
 
 const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
   const abilities = pokemon.abilities.map((ability) =>
-    capitalizeFirstLetter(ability.ability.name),
+    formatWord(ability.ability.name),
   );
   const showAbilities = abilities.join(", ");
 
@@ -15,7 +15,7 @@ const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
     <div className="space-y-4 text-darkGray font-bold text-base sm:text-lg">
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
         <span>Species</span>
-        <span>{capitalizeFirstLetter(pokemon.types[0].type.name)}</span>
+        <span>{formatWord(pokemon.types[0].type.name)}</span>
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">

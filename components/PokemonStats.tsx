@@ -1,5 +1,5 @@
 import { PokemonData } from "@/lib/types";
-import { capitalizeFirstLetter, getBackgroundPokemonColour } from "@/lib/utils";
+import { formatWord, getBackgroundPokemonColour } from "@/lib/utils";
 import { Progress } from "@/components/ui/progress";
 
 interface PokemonStatsProps {
@@ -20,7 +20,7 @@ const PokemonStats = ({ pokemon }: PokemonStatsProps) => {
           className="text-darkGray font-bold text-base flex flex-col sm:flex-row items-start sm:items-center justify-between"
         >
           <div className="w-full sm:w-1/5 mb-2 sm:mb-0">
-            {capitalizeFirstLetter(stat.stat.name)}
+            {formatWord(stat.stat.name)}
           </div>
 
           <div className="flex items-center gap-4 flex-1 justify-between w-full">
