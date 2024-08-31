@@ -17,6 +17,7 @@ import {
 import Image from "next/image";
 import React from "react";
 import PokemonTag from "@/components/PokemonTag";
+import PokemonAbout from "@/components/PokemonAbout";
 
 interface ShowPokemonDetailsDialogProps {
   open: boolean;
@@ -57,7 +58,9 @@ const ShowPokemonDetailsDialog = ({
               {formatPokemonId(pokemon.id)}
             </h2>
             <h1
-              className={"font-bold text-white text-[48px] mb-[18px] cursor-pointer"}
+              className={
+                "font-bold text-white text-[48px] mb-[18px] cursor-pointer"
+              }
             >
               {capitalizeFirstLetter(pokemon.name)}
             </h1>
@@ -77,7 +80,7 @@ const ShowPokemonDetailsDialog = ({
             <TabsTrigger value="evolution">Evolution</TabsTrigger>
           </TabsList>
           <TabsContent value="about">
-            About
+            <PokemonAbout pokemon={pokemon} />
           </TabsContent>
           <TabsContent value="stats">Base Stats</TabsContent>
           <TabsContent value="evolution">Evolution</TabsContent>
