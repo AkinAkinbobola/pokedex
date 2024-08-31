@@ -12,9 +12,10 @@ import Image from "next/image";
 
 interface PokemonsProps {
   query?: string;
+  sort?: string;
 }
 
-const Pokemons = ({ query }: PokemonsProps) => {
+const Pokemons = ({ query, sort }: PokemonsProps) => {
   const {
     isLoading,
     data,
@@ -24,21 +25,17 @@ const Pokemons = ({ query }: PokemonsProps) => {
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ["pokemons", query],
-    queryFn: ({ pageParam }) =>
-      ky
-        .get(
-          "/api/pokemons",
-          query
-            ? {
-                searchParams: {
-                  q: query,
-                  offset: pageParam,
-                },
-              }
-            : { searchParams: { offset: pageParam } },
-        )
-        .json<PokemonsPage>(),
+    queryKey: ["pokemons", query, sort],
+    queryFn: ({ pageParam }) => {
+      const searchParams: Record<string, string | number> = {
+        offset: pageParam,
+      };
+
+      if (query) searchParams.q = query;
+      if (sort) searchParams.sort = sort;
+
+      return ky.get("/api/pokemons", { searchParams }).json<PokemonsPage>();
+    },
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextOffset,
   });
@@ -67,11 +64,7 @@ const Pokemons = ({ query }: PokemonsProps) => {
 
   if (!pokemons || pokemons.length === 0) {
     return (
-      <div
-        className={
-          "flex flex-col gap-2 items-center justify-center h-full"
-        }
-      >
+      <div className={"flex flex-col gap-2 items-center justify-center h-full"}>
         <Image
           src={"/icons/loader.svg"}
           alt={"Loader"}

@@ -35,3 +35,7 @@ export const getBackgroundTagColour = (type: Type) => {
   );
   return colour[0].color;
 };
+
+export const getId = (input: string) => {
+  return Number(input.split("/").slice(-2, -1)[0]);
+};

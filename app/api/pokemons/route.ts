@@ -1,9 +1,11 @@
 import ky from "ky";
 import { GetAllPokemonResponse, PokemonData, PokemonsPage } from "@/lib/types";
 import { NextRequest } from "next/server";
+import { getId } from "@/lib/utils";
 
 export const GET = async (req: NextRequest) => {
   const offset = Number(req.nextUrl.searchParams.get("offset")) || 0;
+  const sort = req.nextUrl.searchParams.get("sort") || undefined;
   const query = req.nextUrl.searchParams.get("q") || undefined;
   const limit = 10;
 
@@ -29,6 +31,30 @@ export const GET = async (req: NextRequest) => {
           (pokemon) => pokemon.url.split("/").slice(-2, -1)[0] === query,
         );
       }
+    }
+
+    if (sort === "numDesc") {
+      filteredPokemon = filteredPokemon.sort(
+        (a, b) => getId(b.url) - getId(a.url),
+      );
+    }
+
+    if (sort === "numAsc") {
+      filteredPokemon = filteredPokemon.sort(
+        (a, b) => getId(a.url) - getId(b.url),
+      );
+    }
+
+    if (sort === "alphaAsc") {
+      filteredPokemon = filteredPokemon.sort((a, b) =>
+        a.name.localeCompare(b.name),
+      );
+    }
+
+    if (sort === "alphaDesc") {
+      filteredPokemon = filteredPokemon.sort((a, b) =>
+        b.name.localeCompare(a.name),
+      );
     }
 
     const paginatedPokemon = filteredPokemon.slice(offset, offset + limit);
