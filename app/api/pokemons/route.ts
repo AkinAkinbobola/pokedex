@@ -17,11 +17,19 @@ export const GET = async (req: NextRequest) => {
       })
       .json<GetAllPokemonResponse>();
 
-    const filteredPokemon = query
-      ? pokemonResponse.results.filter((pokemon) =>
+    let filteredPokemon = pokemonResponse.results;
+
+    if (query) {
+      if (isNaN(Number(query))) {
+        filteredPokemon = filteredPokemon.filter((pokemon) =>
           pokemon.name.toLowerCase().includes(query.toLowerCase()),
-        )
-      : pokemonResponse.results;
+        );
+      } else {
+        filteredPokemon = filteredPokemon.filter(
+          (pokemon) => pokemon.url.split("/").slice(-2, -1)[0] === query,
+        );
+      }
+    }
 
     const paginatedPokemon = filteredPokemon.slice(offset, offset + limit);
 
@@ -32,7 +40,7 @@ export const GET = async (req: NextRequest) => {
     const detailedPokemon = await Promise.all(pokemonPromises);
 
     const nextOffset =
-        offset + limit < filteredPokemon.length ? offset + limit : null;
+      offset + limit < filteredPokemon.length ? offset + limit : null;
 
     const data: PokemonsPage = {
       pokemons: detailedPokemon,
