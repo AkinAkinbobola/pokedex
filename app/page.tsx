@@ -1,6 +1,7 @@
 import SearchBar from "@/components/SearchBar";
 import Pokemons from "@/components/Pokemons";
 import Sort from "@/components/Sort";
+import Filter from "@/components/Filter";
 
 interface Props {
   searchParams: {
@@ -14,8 +15,10 @@ const Home = async ({ searchParams: { q, sort } }: Props) => {
     <main>
       <SearchBar />
 
-      <div>
+      <div className={"flex items-center justify-between"}>
         <Sort />
+
+        <Filter />
       </div>
 
       <Pokemons query={q} sort={sort} />
