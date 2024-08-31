@@ -8,6 +8,7 @@ import Pokemon from "@/components/Pokemon";
 import PokemonsLoadingSkeleton from "@/components/PokemonsLoadingSkeleton";
 import { useInView } from "react-intersection-observer";
 import { Loader2 } from "lucide-react";
+import Image from "next/image";
 
 interface PokemonsProps {
   query?: string;
@@ -66,7 +67,21 @@ const Pokemons = ({ query }: PokemonsProps) => {
 
   if (!pokemons || pokemons.length === 0) {
     return (
-      <div className={"font-bold text-center mt-[102px]"}>No pokemon found</div>
+      <div
+        className={
+          "flex flex-col gap-2 items-center justify-center h-full"
+        }
+      >
+        <Image
+          src={"/icons/loader.svg"}
+          alt={"Loader"}
+          width={126.93}
+          height={128}
+        />
+        <h1 className={"font-bold text-darkGray text-[20px]"}>
+          No pokémon matched your search!
+        </h1>
+      </div>
     );
   }
 

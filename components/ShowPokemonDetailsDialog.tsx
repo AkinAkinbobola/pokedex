@@ -12,6 +12,7 @@ import React from "react";
 import PokemonTag from "@/components/PokemonTag";
 import PokemonAbout from "@/components/PokemonAbout";
 import PokemonStats from "@/components/PokemonStats";
+import PokemonEvolution from "@/components/PokemonEvolution";
 
 interface ShowPokemonDetailsDialogProps {
   open: boolean;
@@ -28,7 +29,7 @@ const ShowPokemonDetailsDialog = ({
   return (
     <Dialog onOpenChange={openChange} open={open}>
       <DialogContent
-        className={"w-[725px] h-[698px] p-0 fixed border-none"}
+        className={"w-[725px] h-[698px] p-0 fixed border-none flex flex-col"}
         style={{ backgroundColor }}
       >
         <ArrowLeft
@@ -36,7 +37,7 @@ const ShowPokemonDetailsDialog = ({
           onClick={() => openChange(false)}
         />
 
-        <div className={"flex items-center justify-center gap-[10px]"}>
+        <div className={"flex items-center justify-center gap-[10px] h-[40%]"}>
           <Image
             src={
               pokemon.sprites.other?.["official-artwork"].front_default ||
@@ -67,7 +68,10 @@ const ShowPokemonDetailsDialog = ({
           </div>
         </div>
 
-        <Tabs defaultValue="about" className="w-full bg-white rounded-t-3xl">
+        <Tabs
+          defaultValue="about"
+          className="w-full bg-white rounded-t-3xl h-[60%]"
+        >
           <TabsList className={"w-full bg-white"}>
             <TabsTrigger value="about">About</TabsTrigger>
             <TabsTrigger value="stats">Base Stats</TabsTrigger>
@@ -79,7 +83,9 @@ const ShowPokemonDetailsDialog = ({
           <TabsContent value="stats">
             <PokemonStats pokemon={pokemon} />
           </TabsContent>
-          <TabsContent value="evolution">Evolution</TabsContent>
+          <TabsContent value="evolution" className={"h-full"}>
+            <PokemonEvolution pokemonId={pokemon.id} />
+          </TabsContent>
         </Tabs>
       </DialogContent>
     </Dialog>
