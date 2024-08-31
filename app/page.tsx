@@ -15,7 +15,7 @@ const Home = async ({ searchParams: { q, sort } }: Props) => {
     <main>
       <SearchBar />
 
-      <div className={"flex items-center justify-between"}>
+      <div className={"flex items-center justify-between gap-6"}>
         <Sort />
 
         <Filter />

@@ -28,7 +28,7 @@ const Sort = () => {
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger
         className={
-          "outline-none py-[12px] px-[16px] cursor-pointer bg-white border-[3px] border-darkGray/[16%] rounded-lg text-darkGray font-bold flex items-center gap-2 w-fit"
+          "outline-none py-[6px] px-[8px] md:py-[12px] md:px-[16px] cursor-pointer bg-white border-[3px] border-darkGray/[16%] rounded-lg text-darkGray font-bold flex items-center gap-2 w-fit"
         }
         onClick={() => setOpen(true)}
       >
