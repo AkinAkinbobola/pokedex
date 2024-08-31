@@ -3,44 +3,39 @@ import { GetAllPokemonResponse, PokemonData, PokemonsPage } from "@/lib/types";
 import { NextRequest } from "next/server";
 
 export const GET = async (req: NextRequest) => {
+  const offset = Number(req.nextUrl.searchParams.get("offset")) || 0;
+  const query = req.nextUrl.searchParams.get("q") || undefined;
   const limit = 10;
-  const query = req.nextUrl.searchParams.get("q")?.toLowerCase();
-  let offset = Number(req.nextUrl.searchParams.get("offset")) || 0;
-  let foundPokemon: PokemonData[] = [];
 
   try {
-    while (foundPokemon.length === 0) {
-      const pokemonResponse = await ky
-          .get("https://pokeapi.co/api/v2/pokemon", {
-            searchParams: {
-              limit,
-              offset,
-            },
-          })
-          .json<GetAllPokemonResponse>();
+    const pokemonResponse = await ky
+      .get("https://pokeapi.co/api/v2/pokemon", {
+        searchParams: {
+          limit: 10000,
+          offset,
+        },
+      })
+      .json<GetAllPokemonResponse>();
 
-      const filteredPokemon = query
-          ? pokemonResponse.results.filter((pokemon) =>
-              pokemon.name.toLowerCase().includes(query)
-          )
-          : pokemonResponse.results;
+    const filteredPokemon = query
+      ? pokemonResponse.results.filter((pokemon) =>
+          pokemon.name.toLowerCase().includes(query.toLowerCase()),
+        )
+      : pokemonResponse.results;
 
-      const pokemonPromises = filteredPokemon.map(async (pokemon) => {
-        return ky.get(pokemon.url).json<PokemonData>();
-      });
+    const paginatedPokemon = filteredPokemon.slice(offset, offset + limit);
 
-      foundPokemon = await Promise.all(pokemonPromises);
+    const pokemonPromises = paginatedPokemon.map(async (pokemon) => {
+      return ky.get(pokemon.url).json<PokemonData>();
+    });
 
-      if (pokemonResponse.results.length < limit) break;
-
-      offset += limit;
-    }
+    const detailedPokemon = await Promise.all(pokemonPromises);
 
     const nextOffset =
-        foundPokemon.length === limit ? offset : null;
+        offset + limit < filteredPokemon.length ? offset + limit : null;
 
     const data: PokemonsPage = {
-      pokemons: foundPokemon,
+      pokemons: detailedPokemon,
       nextOffset,
     };
     return Response.json(data);
