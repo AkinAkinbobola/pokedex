@@ -16,6 +16,7 @@ const Home = async ({ searchParams: { q } }: Props) => {
       <div>
         <Sort />
       </div>
+
       <Pokemons query={q} />
     </main>
   );

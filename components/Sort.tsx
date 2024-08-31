@@ -9,10 +9,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
+import {useRouter} from "next/navigation";
 
 const Sort = () => {
   const [open, setOpen] = useState(false);
   const [sortValue, setSortValue] = useState<string | undefined>("");
+  const router = useRouter();
+
+  const handleSort = (input: string) => {
+    const searchParams = new URLSearchParams(window.location.search)
+    searchParams.set("sort", input);
+    router.push(`?${searchParams.toString()}`);
+  };
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -33,19 +41,31 @@ const Sort = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent className={"w-fit"}>
         <DropdownMenuRadioGroup value={sortValue} onValueChange={setSortValue}>
-          <DropdownMenuRadioItem value={"numAsc"}>
+          <DropdownMenuRadioItem
+            value={"numAsc"}
+            onClick={() => handleSort("numAsc")}
+          >
             Lowest Number First
           </DropdownMenuRadioItem>
 
-          <DropdownMenuRadioItem value={"numDesc"}>
+          <DropdownMenuRadioItem
+            value={"numDesc"}
+            onClick={() => handleSort("numDesc")}
+          >
             Highest Number First
           </DropdownMenuRadioItem>
 
-          <DropdownMenuRadioItem value={"alphaAsc"}>
+          <DropdownMenuRadioItem
+            value={"alphaAsc"}
+            onClick={() => handleSort("alphaAsc")}
+          >
             Alphabetically (A-Z)
           </DropdownMenuRadioItem>
 
-          <DropdownMenuRadioItem value={"alphaDesc"}>
+          <DropdownMenuRadioItem
+            value={"alphaDesc"}
+            onClick={() => handleSort("alphaDesc")}
+          >
             Alphabetically (Z-A)
           </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>

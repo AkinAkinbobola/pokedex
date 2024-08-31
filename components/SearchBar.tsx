@@ -14,7 +14,9 @@ const SearchBar = () => {
 
     if (!query) return;
 
-    router.push(`?q=${encodeURIComponent(query)}`);
+    const searchParams = new URLSearchParams(window.location.search)
+    searchParams.set("q", query);
+    router.push(`?${searchParams.toString()}`);
   };
 
   return (
