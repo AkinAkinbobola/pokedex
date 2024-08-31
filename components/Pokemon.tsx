@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { PokemonData, Type } from "@/lib/types";
 import Image from "next/image";
 import {
@@ -8,12 +8,15 @@ import {
   getBackgroundTagColour,
 } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import ShowPokemonDetailsDialog from "@/components/ShowPokemonDetailsDialog";
+import PokemonTag from "@/components/PokemonTag";
 
 interface PokemonProps {
   pokemon: PokemonData;
 }
 
 const Pokemon = ({ pokemon }: PokemonProps) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const backgroundColor = getBackgroundPokemonColour(pokemon);
   return (
     <div
@@ -34,7 +37,10 @@ const Pokemon = ({ pokemon }: PokemonProps) => {
       />
 
       <div className={"p-6 absolute bottom-0"}>
-        <h1 className={"font-bold text-white text-[28px] mb-2"}>
+        <h1
+          className={"font-bold text-white text-[28px] mb-2 cursor-pointer"}
+          onClick={() => setIsDialogOpen(true)}
+        >
           {capitalizeFirstLetter(pokemon.name)}
         </h1>
         <h2 className={"text-white/80 font-bold text-[18px] mb-[20px]"}>
@@ -47,33 +53,14 @@ const Pokemon = ({ pokemon }: PokemonProps) => {
           ))}
         </div>
       </div>
+
+      <ShowPokemonDetailsDialog
+        open={isDialogOpen}
+        openChange={setIsDialogOpen}
+        pokemon={pokemon}
+      />
     </div>
   );
 };
 
 export default Pokemon;
-
-interface PokemonTagProps {
-  type: Type;
-}
-
-const PokemonTag = ({ type }: PokemonTagProps) => {
-  const backgroundColor = getBackgroundTagColour(type);
-  return (
-    <Button
-      style={{ backgroundColor }}
-      className={"rounded-3xl flex items-center gap-1.5"}
-    >
-      <Image
-        src={`/icons/${type.type.name}.svg`}
-        alt={`${type.type.name} Icon`}
-        width={16}
-        height={16}
-        className={"flex-none"}
-      />
-      <span className={"text-darkGray text-[16px] font-medium"}>
-        {capitalizeFirstLetter(type.type.name)}
-      </span>
-    </Button>
-  );
-};
