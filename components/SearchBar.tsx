@@ -37,7 +37,7 @@ const SearchBar = () => {
       <Button
         type={"submit"}
         className={
-          "bg-yellow text-darkBlue hover:bg-yellow/80 hover:text-darkBlue/80 px-[50px] py-[12px]"
+          "bg-yellow text-darkBlue hover:bg-yellow/80 hover:text-darkBlue/80 px-[25px] md:px-[50px] py-[12px]"
         }
       >
         Search
