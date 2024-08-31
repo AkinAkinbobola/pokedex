@@ -10,24 +10,26 @@ const PokemonAbout = ({ pokemon }: PokemonAboutProps) => {
     capitalizeFirstLetter(ability.ability.name),
   );
   const showAbilities = abilities.join(", ");
+
   return (
-    <div className={"space-y-6 text-darkGray font-bold text-[18px]"}>
-      <div className={"flex items-center gap-[26px]"}>
+    <div className="space-y-4 text-darkGray font-bold text-base sm:text-lg">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
         <span>Species</span>
         <span>{capitalizeFirstLetter(pokemon.types[0].type.name)}</span>
       </div>
 
-      <div className={"flex items-center gap-[26px]"}>
-        <span>Height</span> <span>{pokemon.height * 10}cm</span>
+      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
+        <span>Height</span>
+        <span>{pokemon.height * 10}cm</span>
       </div>
 
-      <div className={"flex items-center gap-[26px]"}>
-        <span>Weight</span> <span>{pokemon.weight / 10}kg</span>
+      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
+        <span>Weight</span>
+        <span>{pokemon.weight / 10}kg</span>
       </div>
 
-      <div className={"flex items-center gap-[26px]"}>
+      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
         <span>Abilities</span>
-
         <span>{showAbilities}</span>
       </div>
     </div>

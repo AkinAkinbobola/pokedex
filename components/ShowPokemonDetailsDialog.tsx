@@ -1,13 +1,6 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { PokemonData } from "@/lib/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import {
   capitalizeFirstLetter,
@@ -18,6 +11,7 @@ import Image from "next/image";
 import React from "react";
 import PokemonTag from "@/components/PokemonTag";
 import PokemonAbout from "@/components/PokemonAbout";
+import PokemonStats from "@/components/PokemonStats";
 
 interface ShowPokemonDetailsDialogProps {
   open: boolean;
@@ -82,7 +76,9 @@ const ShowPokemonDetailsDialog = ({
           <TabsContent value="about">
             <PokemonAbout pokemon={pokemon} />
           </TabsContent>
-          <TabsContent value="stats">Base Stats</TabsContent>
+          <TabsContent value="stats">
+            <PokemonStats pokemon={pokemon} />
+          </TabsContent>
           <TabsContent value="evolution">Evolution</TabsContent>
         </Tabs>
       </DialogContent>
