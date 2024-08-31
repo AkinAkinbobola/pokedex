@@ -29,7 +29,7 @@ const SearchBar = () => {
           className={"absolute top-1/2 left-2 -translate-y-1/2 text-darkBlue"}
         />
         <input
-          placeholder={"Pokemon name, number or type"}
+          placeholder={"Pokemon name or number"}
           className={"ps-12 placeholder-darkBlue h-full w-full outline-none"}
           name={"query"}
         />

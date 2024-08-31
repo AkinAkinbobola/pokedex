@@ -1,5 +1,6 @@
 import SearchBar from "@/components/SearchBar";
 import Pokemons from "@/components/Pokemons";
+import Sort from "@/components/Sort";
 
 interface Props {
   searchParams: {
@@ -12,6 +13,9 @@ const Home = async ({ searchParams: { q } }: Props) => {
     <main>
       <SearchBar />
 
+      <div>
+        <Sort />
+      </div>
       <Pokemons query={q} />
     </main>
   );

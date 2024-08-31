@@ -1,35 +1,57 @@
-"use client"
+"use client";
 
-import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
-import {sorts} from "@/constants";
-import {useState} from "react";
-import Image from "next/image";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { useState } from "react";
 
 const Sort = () => {
-    const [sortsDropdown, setSortsDropdown] = useState(sorts[0])
+  const [open, setOpen] = useState(false);
+  const [sortValue, setSortValue] = useState<string | undefined>("");
 
-    return (
-        <div className={"bg-white border-2 border-darkGray/15 rounded-[8px]"}>
-            <DropdownMenu>
-                <DropdownMenuTrigger className={"flex items-center justify-between py-3 px-4 gap-2"}>
-                    <p className={"font-bold"}>
-                        {sortsDropdown}
-                    </p>
-                    <Image src={"/icons/arrow.svg"} alt={"sort-icon"} width={16} height={16}/>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                    {
-                        sorts.map((sortItem: string) => (
-                            <DropdownMenuItem key={sortItem} onClick={() => setSortsDropdown(sortItem)}>
-                                {sortItem}
-                            </DropdownMenuItem>
-                        ))
-                    }
-                </DropdownMenuContent>
-            </DropdownMenu>
-        </div>
+  return (
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger
+        className={
+          "outline-none py-[12px] px-[16px] cursor-pointer bg-white border-[3px] border-darkGray/[16%] rounded-lg text-darkGray font-bold flex items-center gap-2 w-fit"
+        }
+        onClick={() => setOpen(true)}
+      >
+        <span>Lowest Number First</span>
+        {open ? (
+          <ChevronUp className={"w-[16px] h-[16px] text-darkGray flex-none"} />
+        ) : (
+          <ChevronDown
+            className={"w-[16px] h-[16px] text-darkGray flex-none"}
+          />
+        )}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className={"w-fit"}>
+        <DropdownMenuRadioGroup value={sortValue} onValueChange={setSortValue}>
+          <DropdownMenuRadioItem value={"numAsc"}>
+            Lowest Number First
+          </DropdownMenuRadioItem>
 
-    );
+          <DropdownMenuRadioItem value={"numDesc"}>
+            Highest Number First
+          </DropdownMenuRadioItem>
+
+          <DropdownMenuRadioItem value={"alphaAsc"}>
+            Alphabetically (A-Z)
+          </DropdownMenuRadioItem>
+
+          <DropdownMenuRadioItem value={"alphaDesc"}>
+            Alphabetically (Z-A)
+          </DropdownMenuRadioItem>
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
 };
 
 export default Sort;
