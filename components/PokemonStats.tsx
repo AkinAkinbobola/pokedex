@@ -24,7 +24,7 @@ const PokemonStats = ({ pokemon }: PokemonStatsProps) => {
           </div>
 
           <div className="flex items-center gap-4 flex-1 justify-between w-full">
-            <div>{stat.base_stat}</div>
+            <div className={"w-[23px]"}>{stat.base_stat}</div>
             <Progress value={stat.base_stat} indicatorColor={backgroundColor} />
           </div>
         </div>
@@ -34,7 +34,7 @@ const PokemonStats = ({ pokemon }: PokemonStatsProps) => {
         <div className="w-full sm:w-1/5 mb-2 sm:mb-0">Average</div>
 
         <div className="flex items-center gap-4 flex-1 justify-between w-full">
-          <div>{average}</div>
+          <div className={"w-[23px]"}>{average}</div>
           <Progress value={Number(average)} indicatorColor={backgroundColor} />
         </div>
       </div>
