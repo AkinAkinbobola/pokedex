@@ -84,7 +84,7 @@ const Pokemons = ({ query }: PokemonsProps) => {
       </div>
 
       {isFetchingNextPage && (
-        <div className={"mt-8"}>
+        <div className={"mt-3"}>
           <Loader2 className={"animate-spin mx-auto"} />
         </div>
       )}
