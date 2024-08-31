@@ -38,8 +38,18 @@ export const GET = async (req: NextRequest) => {
       pokemons: detailedPokemon,
       nextOffset,
     };
+
+    await simulateSlowServer()
     return Response.json(data);
   } catch (e) {
     return Response.json({ error: "Internal server error" }, { status: 500 });
   }
 };
+
+function simulateSlowServer(delay = 3000) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Server response after delay");
+    }, delay);
+  });
+}

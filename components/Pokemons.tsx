@@ -84,7 +84,9 @@ const Pokemons = ({ query }: PokemonsProps) => {
       </div>
 
       {isFetchingNextPage && (
-        <Loader2 className={"animate-spin mx-auto py-4"} />
+        <div className={"mt-8"}>
+          <Loader2 className={"animate-spin mx-auto"} />
+        </div>
       )}
     </>
   );
