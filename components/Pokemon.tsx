@@ -21,7 +21,10 @@ const Pokemon = ({ pokemon }: PokemonProps) => {
       style={{ backgroundColor }}
     >
       <Image
-        src={pokemon.sprites.other?.["official-artwork"].front_default || ""}
+        src={
+          pokemon.sprites.other?.["official-artwork"].front_default ||
+          "/icons/large-height.svg"
+        }
         alt={`${pokemon.name} Sprite`}
         width={180}
         height={134}
