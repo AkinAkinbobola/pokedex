@@ -48,7 +48,7 @@ const ShowPokemonDetailsDialog = ({
             height={180.9}
           />
 
-          <div className={"flex flex-col"}>
+          <div className={"flex flex-col p-4"}>
             <h2 className={"text-white/80 font-bold text-[18px] mb-2"}>
               {formatPokemonId(pokemon.id)}
             </h2>
