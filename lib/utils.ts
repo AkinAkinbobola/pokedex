@@ -10,8 +10,12 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const capitalizeFirstLetter = (string: string) =>
-  string.charAt(0).toUpperCase() + string.slice(1);
+export const capitalizeFirstLetter = (string: string) => {
+  return string
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
 
 export const formatPokemonId = (id: number) => {
   if (id < 10) return `#00${id}`;
