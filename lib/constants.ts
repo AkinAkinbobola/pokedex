@@ -41,34 +41,52 @@ export const backgroundPokemonTagTypes = [
 ];
 
 export const pokemonTypes = [
-  'normal',
-  'fire',
-  'water',
-  'electric',
-  'grass',
-  'ice',
-  'fighting',
-  'poison',
-  'ground',
-  'flying',
-  'psychic',
-  'bug',
-  'rock',
-  'ghost',
-  'dragon',
-  'dark',
-  'steel',
-  'fairy'
-]
+  "normal",
+  "fire",
+  "water",
+  "electric",
+  "grass",
+  "ice",
+  "fighting",
+  "poison",
+  "ground",
+  "flying",
+  "psychic",
+  "bug",
+  "rock",
+  "ghost",
+  "dragon",
+  "dark",
+  "steel",
+  "fairy",
+];
 
 export const heights = [
-  "small-height.svg",
-  "medium-height.svg",
-  "large-height.svg",
-]
+  {
+    field: "small",
+    url: "small-height.svg",
+  },
+  {
+    field: "medium",
+    url: "medium-height.svg",
+  },
+  {
+    field: "large",
+    url: "large-height.svg",
+  },
+];
 
 export const weights = [
-  "small-weight.svg",
-  "medium-weight.svg",
-  "large-weight.svg",
-]
+  {
+    field: "light",
+    url: "small-weight.svg",
+  },
+  {
+    field: "medium",
+    url: "medium-weight.svg",
+  },
+  {
+    field: "large",
+    url: "large-weight.svg",
+  },
+];

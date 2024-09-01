@@ -13,9 +13,11 @@ import Image from "next/image";
 interface PokemonsProps {
   query?: string;
   sort?: string;
+  weight?: string;
+  height?: string;
 }
 
-const Pokemons = ({ query, sort }: PokemonsProps) => {
+const Pokemons = ({ query, sort, weight, height }: PokemonsProps) => {
   const {
     isLoading,
     data,
@@ -25,7 +27,7 @@ const Pokemons = ({ query, sort }: PokemonsProps) => {
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ["pokemons", query, sort],
+    queryKey: ["pokemons", query, sort, weight, height],
     queryFn: ({ pageParam }) => {
       const searchParams: Record<string, string | number> = {
         offset: pageParam,
@@ -33,8 +35,12 @@ const Pokemons = ({ query, sort }: PokemonsProps) => {
 
       if (query) searchParams.q = query;
       if (sort) searchParams.sort = sort;
+      if (weight) searchParams.weight = weight;
+      if (height) searchParams.height = height;
 
-      return ky.get("/api/pokemons", { searchParams }).json<PokemonsPage>();
+      return ky
+        .get("/api/pokemons", { searchParams, timeout: false })
+        .json<PokemonsPage>();
     },
     initialPageParam: 0,
     getNextPageParam: (lastPage) => lastPage.nextOffset,
@@ -51,7 +57,11 @@ const Pokemons = ({ query, sort }: PokemonsProps) => {
   const pokemons = data?.pages.flatMap((page) => page.pokemons) || [];
 
   if (isLoading) {
-    return <PokemonsLoadingSkeleton />;
+    return (
+      <div>
+        <PokemonsLoadingSkeleton />
+      </div>
+    );
   }
 
   if (error) {

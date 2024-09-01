@@ -7,10 +7,12 @@ interface Props {
   searchParams: {
     q: string | undefined;
     sort: string | undefined;
+    weight: string | undefined;
+    height: string | undefined;
   };
 }
 
-const Home = async ({ searchParams: { q, sort } }: Props) => {
+const Home = async ({ searchParams: { q, sort, weight, height } }: Props) => {
   return (
     <main>
       <SearchBar />
@@ -21,7 +23,7 @@ const Home = async ({ searchParams: { q, sort } }: Props) => {
         <Filter />
       </div>
 
-      <Pokemons query={q} sort={sort} />
+      <Pokemons query={q} sort={sort} weight={weight} height={height} />
     </main>
   );
 };
