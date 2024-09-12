@@ -12,52 +12,59 @@ export const GET = async (req: NextRequest) => {
   const limit = 10;
 
   try {
+    // Fetch the entire list of Pokémon
     const pokemonResponse = await ky
-        .get("https://pokeapi.co/api/v2/pokemon", {
-          searchParams: {
-            limit: 10000,
-          },
-        })
-        .json<GetAllPokemonResponse>();
+      .get("https://pokeapi.co/api/v2/pokemon", {
+        searchParams: {
+          limit: 10000, // Fetching all Pokémon
+        },
+      })
+      .json<GetAllPokemonResponse>();
 
     let filteredPokemon = pokemonResponse.results;
 
+    // Query filter (either by name or ID)
     if (query) {
       if (isNaN(Number(query))) {
         filteredPokemon = filteredPokemon.filter((pokemon) =>
-            pokemon.name.toLowerCase().includes(query.toLowerCase()),
+          pokemon.name.toLowerCase().includes(query.toLowerCase()),
         );
       } else {
         filteredPokemon = filteredPokemon.filter(
-            (pokemon) => pokemon.url.split("/").slice(-2, -1)[0] === query,
+          (pokemon) => pokemon.url.split("/").slice(-2, -1)[0] === query,
         );
       }
     }
 
+    // Sorting based on sort parameter
     if (sort === "numDesc") {
       filteredPokemon = filteredPokemon.sort(
-          (a, b) => getId(b.url) - getId(a.url),
+        (a, b) => getId(b.url) - getId(a.url),
       );
     } else if (sort === "numAsc") {
       filteredPokemon = filteredPokemon.sort(
-          (a, b) => getId(a.url) - getId(b.url),
+        (a, b) => getId(a.url) - getId(b.url),
       );
     } else if (sort === "alphaAsc") {
       filteredPokemon = filteredPokemon.sort((a, b) =>
-          a.name.localeCompare(b.name),
+        a.name.localeCompare(b.name),
       );
     } else if (sort === "alphaDesc") {
       filteredPokemon = filteredPokemon.sort((a, b) =>
-          b.name.localeCompare(a.name),
+        b.name.localeCompare(a.name),
       );
     }
 
-    const pokemonPromises = filteredPokemon.map(async (pokemon) => {
-      return ky.get(pokemon.url).json<PokemonData>();
+    // Fetch detailed data for the filtered and paginated Pokémon
+    const paginatedPokemon = filteredPokemon.slice(offset, offset + limit);
+
+    const pokemonPromises = paginatedPokemon.map(async (pokemon) => {
+      return ky.get(pokemon.url, { timeout: false }).json<PokemonData>();
     });
 
     let detailedPokemon = await Promise.all(pokemonPromises);
 
+    // Filter by weight (before pagination)
     if (weight) {
       detailedPokemon = detailedPokemon.filter((pokemon) => {
         if (weight === "light") {
@@ -71,6 +78,7 @@ export const GET = async (req: NextRequest) => {
       });
     }
 
+    // Filter by height (before pagination)
     if (height) {
       detailedPokemon = detailedPokemon.filter((pokemon) => {
         if (height === "small") {
@@ -84,19 +92,18 @@ export const GET = async (req: NextRequest) => {
       });
     }
 
-    // Now paginate the filtered and sorted results
-    const paginatedPokemon = detailedPokemon.slice(offset, offset + limit);
-
+    // Check if there are more Pokémon after the current page
     const nextOffset =
-        offset + limit < detailedPokemon.length ? offset + limit : null;
+      offset + limit < filteredPokemon.length ? offset + limit : null;
 
     const data: PokemonsPage = {
-      pokemons: paginatedPokemon,
+      pokemons: detailedPokemon,
       nextOffset,
     };
 
     return Response.json(data);
   } catch (e) {
+    console.log(e);
     return Response.json({ error: "Internal server error" }, { status: 500 });
   }
 };

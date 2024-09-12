@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { PokemonData, Type } from "@/lib/types";
+import { PokemonData } from "@/lib/types";
 import Image from "next/image";
 import {
   formatWord,
   formatPokemonId,
   getBackgroundPokemonColour,
-  getBackgroundTagColour,
 } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 import ShowPokemonDetailsDialog from "@/components/ShowPokemonDetailsDialog";
 import PokemonTag from "@/components/PokemonTag";
 

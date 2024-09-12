@@ -29,7 +29,7 @@ const ShowPokemonDetailsDialog = ({
   return (
     <Dialog onOpenChange={openChange} open={open}>
       <DialogContent
-        className={"w-[725px] h-[698px] p-0 fixed border-none flex flex-col"}
+        className={"w-[725px] p-0 fixed border-none flex flex-col h-screen my-10"}
         style={{ backgroundColor }}
       >
         <ArrowLeft

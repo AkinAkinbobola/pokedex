@@ -6,9 +6,9 @@ import ky from "ky";
 import { PokemonsPage } from "@/lib/types";
 import Pokemon from "@/components/Pokemon";
 import PokemonsLoadingSkeleton from "@/components/PokemonsLoadingSkeleton";
-import { useInView } from "react-intersection-observer";
-import { Loader2 } from "lucide-react";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
 
 interface PokemonsProps {
   query?: string;
@@ -46,14 +46,11 @@ const Pokemons = ({ query, sort, weight, height }: PokemonsProps) => {
     getNextPageParam: (lastPage) => lastPage.nextOffset,
   });
 
-  const { ref } = useInView({
-    rootMargin: "200px",
-    onChange(inView) {
-      if (inView && hasNextPage && !isFetching) {
-        fetchNextPage();
-      }
-    },
-  });
+  const loadMore = () => {
+    if (hasNextPage && !isFetching) {
+      fetchNextPage();
+    }
+  };
   const pokemons = data?.pages.flatMap((page) => page.pokemons) || [];
 
   if (isLoading) {
@@ -98,14 +95,21 @@ const Pokemons = ({ query, sort, weight, height }: PokemonsProps) => {
         {pokemons.map((pokemon) => (
           <Pokemon pokemon={pokemon} key={pokemon.id} />
         ))}
-        <div ref={ref} />
       </div>
 
-      {isFetchingNextPage && (
-        <div className={"mt-3"}>
-          <Loader2 className={"animate-spin mx-auto"} />
-        </div>
-      )}
+      <div className={"flex items-center justify-center py-6"}>
+        <Button
+          disabled={isFetchingNextPage}
+          onClick={loadMore}
+          className={"w-32"}
+        >
+          {isFetchingNextPage ? (
+            <Loader2 className={"animate-spin"} />
+          ) : (
+            "Load More"
+          )}
+        </Button>
+      </div>
     </>
   );
 };

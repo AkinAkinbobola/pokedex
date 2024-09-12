@@ -32,7 +32,7 @@ export default function RootLayout({
         )}
       >
         <ReactQueryProvider>
-          <div className={"container py-12"}>
+          <div className={"container pt-12"}>
             <Header />
             {children}
           </div>
